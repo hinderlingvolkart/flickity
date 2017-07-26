@@ -26,7 +26,5 @@ QUnit.test( 'cellSelector', function( assert ) {
 
   assert.ok( cellsMatchSelector, 'all cell elements match cellSelector' );
 
-  assert.equal( notCell1.parentNode, elem, 'notCell1 parent node is still gallery' );
-  assert.equal( notCell2.parentNode, elem, 'notCell2 parent node is still gallery' );
 
 });
