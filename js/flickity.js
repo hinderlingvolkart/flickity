@@ -131,9 +131,11 @@ proto._create = function() {
   this.velocity = 0;
   this.originSide = this.options.rightToLeft ? 'right' : 'left';
   // create viewport & slider
-  this.viewport = this.element.querySelector(this.options.viewport || '.flickity-viewport');
-  this.slider = this.element.querySelector(this.options.slider || '.flickity-slider');
+  this.viewport = this.options.viewport instanceof HTMLElement ? this.options.viewport : this.element.querySelector(this.options.viewport || '.flickity-viewport');
+  this.slider = this.options.slider instanceof HTMLElement ? this.options.slider : this.element.querySelector(this.options.slider || '.flickity-slider');
   this.slider.style[ this.originSide ] = 0;
+  this.viewport.classList.add('flickity-viewport');
+  this.slider.classList.add('flickity-slider');
 
   if ( this.options.resize || this.options.watchCSS ) {
     window.addEventListener( 'resize', this );

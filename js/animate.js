@@ -88,6 +88,8 @@ proto.animate = function() {
     requestAnimationFrame( function animateFrame() {
       _this.animate();
     });
+  } else {
+    this.lastTime = false;
   }
 };
 

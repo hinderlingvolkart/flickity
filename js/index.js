@@ -1,5 +1,6 @@
 /*!
- * Flickity v2.0.9
+ * Flickity Pure v2.0.9
+ * Modified by Hinderling Volkart
  * Touch, responsive, flickable carousels
  *
  * Licensed GPLv3 for open source use

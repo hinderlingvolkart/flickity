@@ -1,5 +1,6 @@
 /*!
- * Flickity PACKAGED v2.0.9
+ * Flickity PACKAGED Pure v2.0.9
+ * Modified by Hinderling Volkart
  * Touch, responsive, flickable carousels
  *
  * Licensed GPLv3 for open source use
@@ -1027,6 +1028,8 @@ proto.animate = function() {
     requestAnimationFrame( function animateFrame() {
       _this.animate();
     });
+  } else {
+    this.lastTime = false;
   }
 };
 
@@ -1304,8 +1307,8 @@ proto._create = function() {
   this.velocity = 0;
   this.originSide = this.options.rightToLeft ? 'right' : 'left';
   // create viewport & slider
-  this.viewport = this.element.querySelector(this.options.viewport || '.flickity-viewport');
-  this.slider = this.element.querySelector(this.options.slider || '.flickity-slider');
+  this.viewport = this.options.viewport instanceof HTMLElement ? this.options.viewport : this.element.querySelector(this.options.viewport || '.flickity-viewport');
+  this.slider = this.options.slider instanceof HTMLElement ? this.options.slider : this.element.querySelector(this.options.slider || '.flickity-slider');
   this.slider.style[ this.originSide ] = 0;
 
   if ( this.options.resize || this.options.watchCSS ) {
@@ -4012,7 +4015,8 @@ return Flickity;
 }));
 
 /*!
- * Flickity v2.0.9
+ * Flickity Pure v2.0.9
+ * Modified by Hinderling Volkart
  * Touch, responsive, flickable carousels
  *
  * Licensed GPLv3 for open source use
