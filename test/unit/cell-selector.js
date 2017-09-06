@@ -2,8 +2,6 @@ QUnit.test( 'cellSelector', function( assert ) {
   'use strict';
 
   var elem = document.querySelector('#cell-selector');
-  var notCell1 = elem.querySelector('.not-cell1');
-  var notCell2 = elem.querySelector('.not-cell2');
 
   var flkty = new Flickity( elem, {
     cellSelector: '.cell'
