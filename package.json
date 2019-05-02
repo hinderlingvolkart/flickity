@@ -34,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/metafizzy/flickity.git"
+    "url": "git://github.com/hinderlingvolkart/flickity.git"
   },
   "keywords": [
     "touch",
@@ -49,7 +49,7 @@
   "author": "Metafizzy",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/metafizzy/flickity/issues"
+    "url": "https://github.com/hinderlingvolkart/flickity/issues"
   },
   "homepage": "http://flickity.metafizzy.co",
   "directories": {
