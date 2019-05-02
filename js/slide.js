@@ -52,16 +52,14 @@ proto.getLastCell = function() {
 };
 
 proto.select = function() {
-  this.changeSelectedClass('add');
+  this.cells.forEach( function( cell ) {
+    cell.select();
+  });
 };
 
 proto.unselect = function() {
-  this.changeSelectedClass('remove');
-};
-
-proto.changeSelectedClass = function( method ) {
   this.cells.forEach( function( cell ) {
-    cell.element.classList[ method ]('is-selected');
+    cell.unselect();
   });
 };
 

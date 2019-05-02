@@ -6,17 +6,17 @@
     // AMD
     define( [
       './flickity',
-      'tap-listener/tap-listener',
+      'unipointer/unipointer',
       'fizzy-ui-utils/utils'
-    ], function( Flickity, TapListener, utils ) {
-      return factory( window, Flickity, TapListener, utils );
+    ], function( Flickity, Unipointer, utils ) {
+      return factory( window, Flickity, Unipointer, utils );
     });
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
       window,
       require('./flickity'),
-      require('tap-listener'),
+      require('unipointer'),
       require('fizzy-ui-utils')
     );
   } else {
@@ -24,12 +24,12 @@
     factory(
       window,
       window.Flickity,
-      window.TapListener,
+      window.Unipointer,
       window.fizzyUIUtils
     );
   }
 
-}( window, function factory( window, Flickity, TapListener, utils ) {
+}( window, function factory( window, Flickity, Unipointer, utils ) {
 'use strict';
 
 var svgURI = 'http://www.w3.org/2000/svg';
@@ -42,7 +42,7 @@ function PrevNextButton( direction, parent ) {
   this._create();
 }
 
-PrevNextButton.prototype = new TapListener();
+PrevNextButton.prototype = Object.create( Unipointer.prototype );
 
 PrevNextButton.prototype._create = function() {
   // properties
@@ -52,27 +52,25 @@ PrevNextButton.prototype._create = function() {
   this.isLeft = this.direction == leftDirection;
 
   var element = this.element = document.createElement('button');
-  element.className = 'flickity-prev-next-button';
+  element.className = 'flickity-button flickity-prev-next-button';
   element.className += this.isPrevious ? ' previous' : ' next';
   // prevent button from submitting form http://stackoverflow.com/a/10836076/182183
   element.setAttribute( 'type', 'button' );
   // init as disabled
   this.disable();
 
-  element.setAttribute( 'aria-label', this.isPrevious ? 'previous' : 'next' );
+  element.setAttribute( 'aria-label', this.isPrevious ? 'Previous' : 'Next' );
 
   // create arrow
   var svg = this.createSVG();
   element.appendChild( svg );
   // events
-  this.on( 'tap', this.onTap );
   this.parent.on( 'select', this.update.bind( this ) );
   this.on( 'pointerDown', this.parent.childUIPointerDown.bind( this.parent ) );
 };
 
 PrevNextButton.prototype.activate = function() {
-  this.bindTap( this.element );
-  // click events from keyboard
+  this.bindStartEvent( this.element );
   this.element.addEventListener( 'click', this );
   // add to DOM
   this.parent.element.appendChild( this.element );
@@ -81,14 +79,14 @@ PrevNextButton.prototype.activate = function() {
 PrevNextButton.prototype.deactivate = function() {
   // remove from DOM
   this.parent.element.removeChild( this.element );
-  // do regular TapListener destroy
-  TapListener.prototype.destroy.call( this );
-  // click events from keyboard
+  // click events
+  this.unbindStartEvent( this.element );
   this.element.removeEventListener( 'click', this );
 };
 
 PrevNextButton.prototype.createSVG = function() {
   var svg = document.createElementNS( svgURI, 'svg');
+  svg.setAttribute( 'class', 'flickity-button-icon' );
   svg.setAttribute( 'viewBox', '0 0 100 100' );
   var path = document.createElementNS( svgURI, 'path');
   var pathMovements = getArrowMovements( this.parent.options.arrowShape );
@@ -118,23 +116,15 @@ function getArrowMovements( shape ) {
     ' Z';
 }
 
-PrevNextButton.prototype.onTap = function() {
+PrevNextButton.prototype.handleEvent = utils.handleEvent;
+
+PrevNextButton.prototype.onclick = function() {
   if ( !this.isEnabled ) {
     return;
   }
   this.parent.uiChange();
   var method = this.isPrevious ? 'previous' : 'next';
   this.parent[ method ]();
-};
-
-PrevNextButton.prototype.handleEvent = utils.handleEvent;
-
-PrevNextButton.prototype.onclick = function() {
-  // only allow clicks from keyboard
-  var focused = document.activeElement;
-  if ( focused && focused == this.element ) {
-    this.onTap();
-  }
 };
 
 // -----  ----- //
@@ -171,6 +161,7 @@ PrevNextButton.prototype.update = function() {
 
 PrevNextButton.prototype.destroy = function() {
   this.deactivate();
+  this.allOff();
 };
 
 // -------------------------- Flickity prototype -------------------------- //

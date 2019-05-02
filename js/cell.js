@@ -39,12 +39,14 @@ var proto = Cell.prototype;
 
 proto.create = function() {
   this.element.style.position = 'absolute';
+  this.element.setAttribute( 'aria-hidden', 'true' );
   this.x = 0;
   this.shift = 0;
 };
 
 proto.destroy = function() {
   // reset style
+  this.unselect();
   this.element.style.position = '';
   var side = this.parent.originSide;
   this.element.style[ side ] = '';
@@ -71,6 +73,16 @@ proto.renderPosition = function( x ) {
   // render position of cell with in slider
   var side = this.parent.originSide;
   this.element.style[ side ] = this.parent.getPositionValue( x );
+};
+
+proto.select = function() {
+  this.element.classList.add('is-selected');
+  this.element.removeAttribute('aria-hidden');
+};
+
+proto.unselect = function() {
+  this.element.classList.remove('is-selected');
+  this.element.setAttribute( 'aria-hidden', 'true' );
 };
 
 /**
