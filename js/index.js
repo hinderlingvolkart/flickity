@@ -15,16 +15,7 @@
 	/* jshint strict: false */
 	if (typeof define == 'function' && define.amd) {
 		// AMD
-		define([
-			'./flickity',
-			'./drag',
-			'./prev-next-button',
-			'./page-dots',
-			'./player',
-			'./add-remove-cell',
-			'./lazyload',
-			'flickity-as-nav-for/as-nav-for'
-		], factory);
+		define(['./flickity', './drag', './prev-next-button', './page-dots', './player', './add-remove-cell', './lazyload', './as-nav-for'], factory);
 	} else if (typeof module == 'object' && module.exports) {
 		// CommonJS
 		module.exports = factory(
@@ -35,7 +26,7 @@
 			require('./player'),
 			require('./add-remove-cell'),
 			require('./lazyload'),
-			require('flickity-as-nav-for/as-nav-for')
+			require('./as-nav-for')
 		);
 	}
 })(window, function factory(Flickity) {
