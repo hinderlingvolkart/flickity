@@ -3952,13 +3952,13 @@ return Flickity;
   if ( typeof define == 'function' && define.amd ) {
     // AMD
     define( 'flickity/js/as-nav-for',[
-      'flickity/js/index',
+      './flickity',
       'fizzy-ui-utils/utils'
     ], factory );
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
-      require('flickity'),
+      require('./flickity'),
       require('fizzy-ui-utils')
     );
   } else {
